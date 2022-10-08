@@ -7,6 +7,7 @@ import { ReferralModule } from './referral/referral.module';
 import { StoreModule } from './store/store.module';
 import { LevelModule } from './level/level.module';
 import { ReceiptModule } from './receipt/receipt.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ReceiptModule } from './receipt/receipt.module';
     StoreModule,
     LevelModule,
     ReceiptModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

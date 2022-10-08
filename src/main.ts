@@ -6,10 +6,11 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
   const logger = new Logger(bootstrap.name);
   const config = new DocumentBuilder()
