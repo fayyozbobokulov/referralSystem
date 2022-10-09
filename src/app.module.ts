@@ -13,7 +13,6 @@ import { User } from './user/entities/user.entity';
 import { Receipt } from './receipt/entities/receipt.entity';
 import { Referral } from './referral/entities/referral.entity';
 import { Store } from './store/entities/store.entity';
-import { Item } from './receipt/entities/item.entity';
 import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 
 @Module({
@@ -29,7 +28,7 @@ import { AuthMiddleware } from './auth/middlewares/auth.middleware';
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
-        entities: [User, Level, Receipt, Referral, Store, Item],
+        entities: [User, Level, Receipt, Referral, Store],
         synchronize: true,
         migrations: ['./migrations/*{.ts,.js}'],
       }),

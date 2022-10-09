@@ -5,8 +5,8 @@ import { Store } from '../../store/entities/store.entity';
 
 @Entity('referral')
 export class Referral extends Base {
-  @ManyToOne(() => User, (user) => user.id)
-  user: string;
+  @ManyToOne(() => User, (user) => user.referrals)
+  user: User;
 
   @OneToOne(() => User, (user) => user.id)
   parent: string;

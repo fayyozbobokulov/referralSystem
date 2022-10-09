@@ -20,23 +20,18 @@ export class LevelController {
     return this.levelService.create(createLevelDto);
   }
 
-  @Get()
-  findAll() {
-    return this.levelService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.levelService.findOne(+id);
+    return this.levelService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLevelDto: UpdateLevelDto) {
-    return this.levelService.update(+id, updateLevelDto);
+    return this.levelService.update(id, updateLevelDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.levelService.remove(+id);
+    return this.levelService.remove(id);
   }
 }

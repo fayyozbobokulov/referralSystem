@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateReceiptDto } from '../dto/create-receipt.dto';
-import { UpdateReceiptDto } from '../dto/update-receipt.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Receipt } from '../entities/receipt.entity';
+import { Repository } from 'typeorm';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable()
 export class ReceiptService {
-  create(createReceiptDto: CreateReceiptDto) {
-    return 'This action adds a new receipt';
+  constructor(
+    @InjectRepository(Receipt)
+    private readonly receiptRepository: Repository<Receipt>,
+    private readonly userService: UserService,
+  ) {}
+
+  async create(createReceiptDto: CreateReceiptDto): Promise<Receipt> {
+    const receipt = new Receipt();
+    receipt.user = await this.userService.findById(createReceiptDto.user_id);
+    receipt.store = createReceiptDto.store_id;
+    receipt.amount = createReceiptDto.amount;
+    return await this.receiptRepository.save(receipt);
   }
 
-  findAll() {
-    return `This action returns all receipt`;
+  async findOne(id: string): Promise<Receipt> {
+    const receipt = await this.receiptRepository.findOneBy({ id });
+    if (!receipt) throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    return receipt;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} receipt`;
-  }
-
-  update(id: number, updateReceiptDto: UpdateReceiptDto) {
-    return `This action updates a #${id} receipt`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} receipt`;
+  async remove(id: string) {
+    const receipt = await this.findOne(id);
+    await this.receiptRepository.remove(receipt);
+    return 'Deleted Successfully';
   }
 }

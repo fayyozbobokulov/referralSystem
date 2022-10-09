@@ -4,20 +4,23 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ReferralService } from '../services/referral.service';
 import { CreateReferralDto } from '../dto/create-referral.dto';
-import { UpdateReferralDto } from '../dto/update-referral.dto';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+import { GetUser } from '../../global/decorators/getUser.decorator';
+import { User } from '../../user/entities/user.entity';
 
 @Controller('referral')
+@UseGuards(AuthGuard)
 export class ReferralController {
   constructor(private readonly referralService: ReferralService) {}
 
   @Post()
-  create(@Body() createReferralDto: CreateReferralDto) {
-    return this.referralService.create(createReferralDto);
+  create(@GetUser() user: User, @Body() createReferralDto: CreateReferralDto) {
+    return this.referralService.create(user, createReferralDto);
   }
 
   @Get()
@@ -27,19 +30,11 @@ export class ReferralController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.referralService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateReferralDto: UpdateReferralDto,
-  ) {
-    return this.referralService.update(+id, updateReferralDto);
+    return this.referralService.findOne(id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.referralService.remove(+id);
+    return this.referralService.remove(id);
   }
 }
