@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +8,13 @@ import { StoreModule } from './store/store.module';
 import { LevelModule } from './level/level.module';
 import { ReceiptModule } from './receipt/receipt.module';
 import { AuthModule } from './auth/auth.module';
+import { Level } from './level/entities/level.entity';
+import { User } from './user/entities/user.entity';
+import { Receipt } from './receipt/entities/receipt.entity';
+import { Referral } from './referral/entities/referral.entity';
+import { Store } from './store/entities/store.entity';
+import { Item } from './receipt/entities/item.entity';
+import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -22,12 +29,9 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
-        entities: [],
-        synchronize: false,
+        entities: [User, Level, Receipt, Referral, Store, Item],
+        synchronize: true,
         migrations: ['./migrations/*{.ts,.js}'],
-        cli: {
-          migrationsDir: './migrations',
-        },
       }),
     }),
     UserModule,
@@ -41,4 +45,11 @@ import { AuthModule } from './auth/auth.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}

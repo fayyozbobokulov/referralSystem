@@ -10,9 +10,12 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
+  app.setGlobalPrefix('api');
   const logger = new Logger(bootstrap.name);
+
+  app.useGlobalPipes(new ValidationPipe());
+
   const config = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('Referral System')

@@ -1,11 +1,10 @@
 import {
-  BaseEntity,
   CreateDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-export class Base extends BaseEntity {
+export class Base {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
