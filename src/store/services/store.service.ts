@@ -25,6 +25,10 @@ export class StoreService {
     return store;
   }
 
+  async findAll(): Promise<Store[]> {
+    return await this.storeRepository.find();
+  }
+
   async update(id: string, updateStoreDto: UpdateStoreDto) {
     await this.storeRepository.update({ id }, updateStoreDto);
     return 'Successfully Updated';

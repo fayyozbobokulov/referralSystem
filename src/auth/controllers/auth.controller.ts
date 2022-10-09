@@ -26,4 +26,9 @@ export class AuthController {
   currentUser(@GetUser() user: User) {
     return user;
   }
+
+  @Get('users')
+  getUsers(): Promise<User[]> {
+    return this.authService.getAllUsers();
+  }
 }

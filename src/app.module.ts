@@ -13,7 +13,7 @@ import { User } from './user/entities/user.entity';
 import { Receipt } from './receipt/entities/receipt.entity';
 import { Referral } from './referral/entities/referral.entity';
 import { Store } from './store/entities/store.entity';
-import { AuthMiddleware } from './auth/middlewares/auth.middleware';
+import { AuthMiddleware } from './global/middlewares/auth.middleware';
 
 @Module({
   imports: [

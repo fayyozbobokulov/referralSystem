@@ -29,7 +29,8 @@ export class LevelService {
     return level;
   }
 
-  update(id: string, updateLevelDto: UpdateLevelDto) {
+  async update(id: string, updateLevelDto: UpdateLevelDto) {
+    await this.levelRepository.update({ id }, updateLevelDto);
     return `This action updates a #${id} level`;
   }
 

@@ -10,6 +10,7 @@ import {
 import { StoreService } from '../services/store.service';
 import { CreateStoreDto } from '../dto/create-store.dto';
 import { UpdateStoreDto } from '../dto/update-store.dto';
+import { Store } from '../entities/store.entity';
 
 @Controller('store')
 export class StoreController {
@@ -18,6 +19,11 @@ export class StoreController {
   @Post()
   create(@Body() createStoreDto: CreateStoreDto) {
     return this.storeService.create(createStoreDto);
+  }
+
+  @Get()
+  findAll(): Promise<Store[]> {
+    return this.storeService.findAll();
   }
 
   @Get(':id')

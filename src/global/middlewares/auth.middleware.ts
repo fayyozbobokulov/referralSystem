@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Response } from 'express';
-import { IExpressRequest } from '../../global/interfaces/expressRequest.interface';
+import { IExpressRequest } from '../interfaces/expressRequest.interface';
 import { verify } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '../../user/services/user.service';
@@ -26,7 +26,6 @@ export class AuthMiddleware implements NestMiddleware {
         this.configService.get<string>('JWT_SECRET_KEY'),
       );
       req.user = await this.userService.findById(decode.id);
-      console.log(req.user);
       next();
     } catch (err) {
       req.user = null;

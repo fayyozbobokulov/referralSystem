@@ -44,6 +44,10 @@ export class AuthService {
     return this.buildUserResponse(user);
   }
 
+  async getAllUsers(): Promise<User[]> {
+    return this.userService.findAll();
+  }
+
   private buildUserResponse(user: User): IUserResponse {
     return {
       user: {

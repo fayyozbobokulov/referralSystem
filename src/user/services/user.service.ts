@@ -30,7 +30,9 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<string> {
@@ -41,5 +43,9 @@ export class UserService {
   async remove(user: User): Promise<string> {
     await this.userRepository.remove(user);
     return `User with ID - ${user.id} deleted successfully`;
+  }
+
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 }

@@ -11,6 +11,6 @@ export class Receipt extends Base {
   @OneToOne(() => Store, (store) => store.id)
   store: string;
 
-  @Column()
+  @Column({ type: 'float8' })
   amount: number;
 }

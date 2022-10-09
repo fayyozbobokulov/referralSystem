@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
 import { Base } from '../../global/entities/base.entity';
 import { User } from '../../user/entities/user.entity';
 import { Store } from '../../store/entities/store.entity';
@@ -11,9 +11,15 @@ export class Referral extends Base {
   @OneToOne(() => User, (user) => user.id)
   parent: string;
 
-  @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User, (user) => user.id, { nullable: true })
   child: string;
 
-  @OneToMany(() => Store, (store) => store.id)
-  store: string;
+  @Column({ nullable: true })
+  child_phone: string;
+
+  @ManyToOne(() => Store, (store) => store.referrals)
+  store: Store;
+
+  @Column({ type: 'bool', default: false })
+  accepted: boolean;
 }

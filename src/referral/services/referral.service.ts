@@ -4,23 +4,30 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Referral } from '../entities/referral.entity';
 import { Repository } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { StoreService } from '../../store/services/store.service';
 
 @Injectable()
 export class ReferralService {
   constructor(
     @InjectRepository(Referral)
     private readonly referralRepository: Repository<Referral>,
+    private readonly storeService: StoreService,
   ) {}
 
   async create(user: User, createReferralDto: CreateReferralDto) {
     const referral = new Referral();
     referral.user = user;
-    Object.assign(referral, createReferralDto);
+    referral.store = await this.storeService.findOne(createReferralDto.store);
+    referral.child = createReferralDto.child;
+    referral.parent = createReferralDto.parent;
     return await this.referralRepository.save(referral);
   }
 
-  findAll() {
-    return `This action returns all referral`;
+  async findAll(user: User): Promise<Referral[]> {
+    return await this.referralRepository
+      .createQueryBuilder('referral')
+      .leftJoinAndSelect('referral.store', 'store')
+      .getMany();
   }
 
   async findOne(id: string) {
