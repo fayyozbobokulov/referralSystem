@@ -15,6 +15,7 @@ import { GetUser } from '../../global/decorators/getUser.decorator';
 import { User } from '../../user/entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateReferralDto } from '../dto/update-referral.dto';
+import { Referral } from '../entities/referral.entity';
 
 @ApiTags('Referral Controller')
 @Controller('referral')
@@ -35,22 +36,22 @@ export class ReferralController {
     @GetUser() user: User,
     @Param('id') id: string,
     @Body() updateReferralDto: UpdateReferralDto,
-  ) {
+  ): Promise<Referral> {
     return this.referralService.update(user, id, updateReferralDto);
   }
 
   @Get()
-  findAll(@GetUser() user: User) {
+  findAll(@GetUser() user: User): Promise<Referral[]> {
     return this.referralService.findAll(user);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Referral> {
     return this.referralService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<string> {
     return this.referralService.remove(id);
   }
 }
