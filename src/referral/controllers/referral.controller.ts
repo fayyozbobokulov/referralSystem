@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -27,6 +28,11 @@ export class ReferralController {
     @Body() createReferralDto: CreateReferralDto,
   ): Promise<Referral> {
     return this.referralService.create(user, createReferralDto);
+  }
+
+  @Patch('update/:id')
+  updateReferral(@GetUser() user: User, @Param('id') id: string) {
+    return;
   }
 
   @Get()

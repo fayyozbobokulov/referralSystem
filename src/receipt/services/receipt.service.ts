@@ -53,18 +53,17 @@ export class ReceiptService {
     const receipt = await this.findOne(receipt_id);
     const referral = await this.checkUserHasReferral(user, receipt);
     const levels = await this.checkStoreHasLevels(receipt.store);
-    if (referral && levels.length === 0) {
-      await this.update(receipt_id, user);
-      return await this.findOne(receipt_id);
+    if (!referral && levels.length !== 0) {
+      const cashbackAmount = this.computeCashback(levels, receipt);
+      await this.userService.distributeCashback(
+        levels.length,
+        referral,
+        cashbackAmount,
+      );
     }
-    const cashbackAmount = this.computeCashback(levels, receipt);
-    console.log(cashbackAmount);
-    await this.userService.distributeCashback(
-      levels.length,
-      referral,
-      cashbackAmount,
-    );
-    return;
+
+    await this.update(receipt_id, user);
+    return await this.findOne(receipt_id);
   }
 
   computeCashback(levels: Level[], receipt: Receipt): number[] {
