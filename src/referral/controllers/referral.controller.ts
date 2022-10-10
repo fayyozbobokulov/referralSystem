@@ -41,8 +41,8 @@ export class ReferralController {
   }
 
   @Get()
-  findAll(@GetUser() user: User): Promise<Referral[]> {
-    return this.referralService.findAll(user);
+  findAll(): Promise<Referral[]> {
+    return this.referralService.findAll();
   }
 
   @Get(':id')

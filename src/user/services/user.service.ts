@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +17,7 @@ import { ReferralService } from '../../referral/services/referral.service';
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @Inject(forwardRef(() => ReferralService))
     private readonly referralService: ReferralService,
   ) {}
 
@@ -36,6 +43,10 @@ export class UserService {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
     return user;
+  }
+
+  async findByPhone(phone_number: string): Promise<User> {
+    return await this.userRepository.findOneBy({ phone_number });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<string> {
