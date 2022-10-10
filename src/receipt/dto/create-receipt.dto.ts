@@ -1,15 +1,14 @@
 import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateReceiptDto {
-  // @IsNotEmpty()
-  // @IsUUID()
-  // user_id: string;
-
+  @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
   store_id: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
   @IsNumber()

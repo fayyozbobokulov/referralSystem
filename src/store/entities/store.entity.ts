@@ -11,11 +11,9 @@ export class Store extends Base {
   @Column()
   name: string;
 
-  @ApiProperty()
   @OneToMany(() => Level, (level) => level, { nullable: true })
   levels: Level[];
 
-  @ApiProperty()
   @ManyToMany(() => User, (user) => user.stores, { nullable: true })
   users: User[];
 

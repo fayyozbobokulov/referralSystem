@@ -13,16 +13,29 @@ import { CreateReferralDto } from '../dto/create-referral.dto';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { GetUser } from '../../global/decorators/getUser.decorator';
 import { User } from '../../user/entities/user.entity';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiResponse,
+  ApiTags,
+  ApiUnprocessableEntityResponse,
+} from '@nestjs/swagger';
 import { UpdateReferralDto } from '../dto/update-referral.dto';
 import { Referral } from '../entities/referral.entity';
+import { ValidationErrorResponse } from '../../global/interfaces/validation-error-response.interface';
+import { ErrorResponse } from '../../global/interfaces/error-response.interface';
 
-@ApiTags('Referral Controller')
+@ApiTags('Referral')
 @Controller('referral')
 @UseGuards(AuthGuard)
 export class ReferralController {
   constructor(private readonly referralService: ReferralService) {}
 
+  @ApiCreatedResponse({ type: String })
+  @ApiBadRequestResponse({ type: ValidationErrorResponse })
+  @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
+  @ApiInternalServerErrorResponse({ type: ErrorResponse })
   @Post()
   create(
     @GetUser() user: User,
@@ -31,6 +44,10 @@ export class ReferralController {
     return this.referralService.create(user, createReferralDto);
   }
 
+  @ApiResponse({ type: Referral })
+  @ApiBadRequestResponse({ type: ValidationErrorResponse })
+  @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
+  @ApiInternalServerErrorResponse({ type: ErrorResponse })
   @Patch(':id')
   updateReferral(
     @GetUser() user: User,
@@ -40,16 +57,28 @@ export class ReferralController {
     return this.referralService.update(user, id, updateReferralDto);
   }
 
+  @ApiResponse({ type: [Referral] })
+  @ApiBadRequestResponse({ type: ValidationErrorResponse })
+  @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
+  @ApiInternalServerErrorResponse({ type: ErrorResponse })
   @Get()
   findAll(): Promise<Referral[]> {
     return this.referralService.findAll();
   }
 
+  @ApiResponse({ type: Referral })
+  @ApiBadRequestResponse({ type: ValidationErrorResponse })
+  @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
+  @ApiInternalServerErrorResponse({ type: ErrorResponse })
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Referral> {
     return this.referralService.findOne(id);
   }
 
+  @ApiResponse({ type: String })
+  @ApiBadRequestResponse({ type: ValidationErrorResponse })
+  @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
+  @ApiInternalServerErrorResponse({ type: ErrorResponse })
   @Delete(':id')
   remove(@Param('id') id: string): Promise<string> {
     return this.referralService.remove(id);

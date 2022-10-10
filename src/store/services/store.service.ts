@@ -12,13 +12,13 @@ export class StoreService {
     private readonly storeRepository: Repository<Store>,
   ) {}
 
-  async create(createStoreDto: CreateStoreDto) {
+  async create(createStoreDto: CreateStoreDto): Promise<Store> {
     const store = new Store();
     Object.assign(store, createStoreDto);
     return await this.storeRepository.save(store);
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Store> {
     const store = await this.storeRepository.findOne({ where: { id } });
     if (!store)
       throw new HttpException('Store not Found', HttpStatus.NOT_FOUND);
@@ -29,12 +29,12 @@ export class StoreService {
     return await this.storeRepository.find();
   }
 
-  async update(id: string, updateStoreDto: UpdateStoreDto) {
+  async update(id: string, updateStoreDto: UpdateStoreDto): Promise<string> {
     await this.storeRepository.update({ id }, updateStoreDto);
     return 'Successfully Updated';
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<string> {
     const store = await this.storeRepository.findOne({ where: { id } });
     await this.storeRepository.remove(store);
     return 'Successfully deleted';

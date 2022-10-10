@@ -13,10 +13,10 @@ export class Level extends Base {
   @Column()
   percentage: number;
 
-  @ApiProperty()
   @ManyToOne(() => Store, (store) => store.levels)
   store: Store;
 
+  @ApiProperty()
   @Column()
   order: number;
 }

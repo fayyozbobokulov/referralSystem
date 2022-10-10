@@ -13,7 +13,7 @@ export class LevelService {
     private readonly storeService: StoreService,
   ) {}
 
-  async create(createLevelDto: CreateLevelDto) {
+  async create(createLevelDto: CreateLevelDto): Promise<Level> {
     const level = new Level();
     const store = await this.storeService.findOne(createLevelDto.store_id);
     delete createLevelDto.store_id;
@@ -22,7 +22,7 @@ export class LevelService {
     return await this.levelRepository.save(level);
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Level> {
     const level = await this.levelRepository.findOneBy({ id });
     if (!level)
       throw new HttpException('Level not found!', HttpStatus.NOT_FOUND);
@@ -41,12 +41,12 @@ export class LevelService {
     });
   }
 
-  async update(id: string, updateLevelDto: UpdateLevelDto) {
+  async update(id: string, updateLevelDto: UpdateLevelDto): Promise<string> {
     await this.levelRepository.update({ id }, updateLevelDto);
     return `This action updates a #${id} level`;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<string> {
     const level = await this.findOne(id);
     await this.levelRepository.remove(level);
     return `This action removes a #${id} level`;
