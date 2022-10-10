@@ -14,7 +14,7 @@ import { AuthGuard } from '../../auth/guards/auth.guard';
 import { GetUser } from '../../global/decorators/getUser.decorator';
 import { User } from '../../user/entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { Referral } from '../entities/referral.entity';
+import { UpdateReferralDto } from '../dto/update-referral.dto';
 
 @ApiTags('Referral Controller')
 @Controller('referral')
@@ -26,13 +26,17 @@ export class ReferralController {
   create(
     @GetUser() user: User,
     @Body() createReferralDto: CreateReferralDto,
-  ): Promise<Referral> {
+  ): Promise<string> {
     return this.referralService.create(user, createReferralDto);
   }
 
-  @Patch('update/:id')
-  updateReferral(@GetUser() user: User, @Param('id') id: string) {
-    return;
+  @Patch(':id')
+  updateReferral(
+    @GetUser() user: User,
+    @Param('id') id: string,
+    @Body() updateReferralDto: UpdateReferralDto,
+  ) {
+    return this.referralService.update(user, id, updateReferralDto);
   }
 
   @Get()

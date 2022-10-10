@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateReferralDto } from './create-referral.dto';
+import { IsBoolean, IsNotEmpty } from 'class-validator';
 
-export class UpdateReferralDto extends PartialType(CreateReferralDto) {}
+export class UpdateReferralDto {
+  @IsBoolean()
+  @IsNotEmpty()
+  accepted: boolean;
+}
