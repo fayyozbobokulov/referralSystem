@@ -15,6 +15,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
+  ApiOkResponse,
   ApiResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
@@ -36,7 +37,7 @@ export class StoreController {
     return this.storeService.create(createStoreDto);
   }
 
-  @ApiResponse({ type: [Store] })
+  @ApiOkResponse({ type: [Store] })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -45,7 +46,7 @@ export class StoreController {
     return this.storeService.findAll();
   }
 
-  @ApiResponse({ type: Store })
+  @ApiOkResponse({ type: Store })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -66,7 +67,7 @@ export class StoreController {
     return this.storeService.update(id, updateStoreDto);
   }
 
-  @ApiResponse({ type: String })
+  @ApiOkResponse({ type: String })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })

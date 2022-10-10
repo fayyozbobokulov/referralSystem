@@ -6,7 +6,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('referral')
 export class Referral extends Base {
-  @ApiProperty()
   @ManyToOne(() => User, (user) => user.referrals)
   user: User;
 

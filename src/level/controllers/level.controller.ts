@@ -14,7 +14,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
@@ -36,7 +36,7 @@ export class LevelController {
     return this.levelService.create(createLevelDto);
   }
 
-  @ApiResponse({ type: Level })
+  @ApiOkResponse({ type: Level })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -45,7 +45,7 @@ export class LevelController {
     return this.levelService.findOne(id);
   }
 
-  @ApiResponse({ type: String })
+  @ApiOkResponse({ type: String })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -57,7 +57,7 @@ export class LevelController {
     return this.levelService.update(id, updateLevelDto);
   }
 
-  @ApiResponse({ type: String })
+  @ApiOkResponse({ type: String })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })

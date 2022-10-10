@@ -17,7 +17,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
@@ -44,7 +44,7 @@ export class ReferralController {
     return this.referralService.create(user, createReferralDto);
   }
 
-  @ApiResponse({ type: Referral })
+  @ApiOkResponse({ type: Referral })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -57,7 +57,7 @@ export class ReferralController {
     return this.referralService.update(user, id, updateReferralDto);
   }
 
-  @ApiResponse({ type: [Referral] })
+  @ApiOkResponse({ type: [Referral] })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -66,7 +66,7 @@ export class ReferralController {
     return this.referralService.findAll();
   }
 
-  @ApiResponse({ type: Referral })
+  @ApiOkResponse({ type: Referral })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -75,7 +75,7 @@ export class ReferralController {
     return this.referralService.findOne(id);
   }
 
-  @ApiResponse({ type: String })
+  @ApiOkResponse({ type: String })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })

@@ -11,19 +11,24 @@ import { Referral } from '../../referral/entities/referral.entity';
 import { Store } from '../../store/entities/store.entity';
 import { Receipt } from '../../receipt/entities/receipt.entity';
 import { hash } from 'bcrypt';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('user')
 @Unique(['phone_number'])
 export class User extends Base {
+  @ApiProperty()
   @Column()
   name: string;
 
+  @ApiProperty()
   @Column({ default: 0, type: 'float8' })
   cashback: number;
 
+  @ApiProperty()
   @Column()
   phone_number: string;
 
+  @ApiProperty()
   @Column({ select: false })
   password: string;
 
@@ -33,17 +38,16 @@ export class User extends Base {
     nullable: true,
   })
   referrals: Referral[];
+
   @ManyToMany(() => Store, (store) => store.users, {
     nullable: true,
   })
   stores: Store[];
+
   @OneToMany(() => Receipt, (receipt) => receipt.user, {
     nullable: true,
   })
   receipts: Receipt[];
-  //
-  // @OneToOne(() => Referral, (referral) => referral.child)
-  // child: Referral;
 
   @BeforeInsert()
   async hasPassword() {

@@ -10,7 +10,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
@@ -31,7 +31,7 @@ export class AuthController {
     return this.authService.signUp(createUserDto);
   }
 
-  @ApiResponse({ type: User })
+  @ApiOkResponse({ type: User })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -40,7 +40,7 @@ export class AuthController {
     return this.authService.signIn(signinUserDto);
   }
 
-  @ApiResponse({ type: User })
+  @ApiOkResponse({ type: User })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -50,7 +50,7 @@ export class AuthController {
     return user;
   }
 
-  @ApiResponse({ type: [User] })
+  @ApiOkResponse({ type: [User] })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })

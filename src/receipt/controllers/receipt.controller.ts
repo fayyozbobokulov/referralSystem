@@ -17,7 +17,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
@@ -38,7 +38,7 @@ export class ReceiptController {
     return this.receiptService.create(createReceiptDto);
   }
 
-  @ApiResponse({ type: Receipt })
+  @ApiOkResponse({ type: Receipt })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -48,7 +48,7 @@ export class ReceiptController {
     return this.receiptService.payReceipt(user, id);
   }
 
-  @ApiResponse({ type: Receipt })
+  @ApiOkResponse({ type: Receipt })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
@@ -57,7 +57,7 @@ export class ReceiptController {
     return this.receiptService.findOne(id);
   }
 
-  @ApiResponse({ type: String })
+  @ApiOkResponse({ type: String })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
