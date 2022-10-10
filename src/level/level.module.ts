@@ -9,5 +9,6 @@ import { StoreModule } from '../store/store.module';
   imports: [TypeOrmModule.forFeature([Level]), StoreModule],
   controllers: [LevelController],
   providers: [LevelService],
+  exports: [LevelService],
 })
 export class LevelModule {}

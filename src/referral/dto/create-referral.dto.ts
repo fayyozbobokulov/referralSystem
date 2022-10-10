@@ -1,13 +1,13 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateReferralDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsUUID()
   parent: string;
 
   @IsNotEmpty()
-  @IsUUID()
-  child: string;
+  @IsString()
+  child_phone: string;
 
   @IsNotEmpty()
   @IsUUID()

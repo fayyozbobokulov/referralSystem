@@ -9,5 +9,6 @@ import { StoreModule } from '../store/store.module';
   imports: [TypeOrmModule.forFeature([Referral]), StoreModule],
   controllers: [ReferralController],
   providers: [ReferralService],
+  exports: [ReferralService],
 })
 export class ReferralModule {}

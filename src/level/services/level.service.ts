@@ -29,6 +29,18 @@ export class LevelService {
     return level;
   }
 
+  async findByStoreId(store_id: string): Promise<Level[]> {
+    return await this.levelRepository.find({
+      where: {
+        store: {
+          id: store_id,
+        },
+      },
+      select: ['id', 'created_date', 'percentage', 'title'],
+      order: { order: 'ASC' },
+    });
+  }
+
   async update(id: string, updateLevelDto: UpdateLevelDto) {
     await this.levelRepository.update({ id }, updateLevelDto);
     return `This action updates a #${id} level`;

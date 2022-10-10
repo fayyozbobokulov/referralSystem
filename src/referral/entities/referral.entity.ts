@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Base } from '../../global/entities/base.entity';
 import { User } from '../../user/entities/user.entity';
 import { Store } from '../../store/entities/store.entity';
@@ -8,11 +8,9 @@ export class Referral extends Base {
   @ManyToOne(() => User, (user) => user.referrals)
   user: User;
 
-  @OneToOne(() => User, (user) => user.id)
+  // @OneToOne(() => User, (user) => user.id)
+  @Column({ type: 'uuid', nullable: true })
   parent: string;
-
-  @OneToOne(() => User, (user) => user.id, { nullable: true })
-  child: string;
 
   @Column({ nullable: true })
   child_phone: string;

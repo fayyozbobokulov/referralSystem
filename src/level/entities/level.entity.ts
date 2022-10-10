@@ -16,4 +16,7 @@ export class Level extends Base {
   @ApiProperty()
   @ManyToOne(() => Store, (store) => store.levels)
   store: Store;
+
+  @Column()
+  order: number;
 }

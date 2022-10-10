@@ -13,4 +13,9 @@ export class CreateLevelDto {
   @IsNotEmpty()
   @IsString()
   store_id: string;
+
+  @IsNotEmpty()
+  @Type(() => Number)
+  @IsNumber()
+  order: number;
 }

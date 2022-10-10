@@ -18,7 +18,7 @@ export class User extends Base {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ default: 0, type: 'float8' })
   cashback: number;
 
   @Column()
@@ -41,6 +41,9 @@ export class User extends Base {
     nullable: true,
   })
   receipts: Receipt[];
+  //
+  // @OneToOne(() => Referral, (referral) => referral.child)
+  // child: Referral;
 
   @BeforeInsert()
   async hasPassword() {

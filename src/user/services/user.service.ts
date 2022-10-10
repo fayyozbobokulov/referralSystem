@@ -4,11 +4,14 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
+import { Referral } from '../../referral/entities/referral.entity';
+import { ReferralService } from '../../referral/services/referral.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private readonly referralService: ReferralService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -47,5 +50,28 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
+  }
+
+  async distributeCashback(
+    level_length: number,
+    referral: Referral,
+    cashbackAmounts: number[],
+  ): Promise<any> {
+    const userList = await this.referralService.findReferralUsersByLevelLength(
+      level_length,
+      referral,
+    );
+
+    for (let i = 0; i < userList.length; i++) {
+      await this.userRepository.manager.transaction(
+        async (transactionalEntityManager) => {
+          const user = await transactionalEntityManager.findOneBy(User, {
+            id: userList[i].id,
+          });
+          user.cashback += cashbackAmounts[i];
+          await transactionalEntityManager.save(User, user);
+        },
+      );
+    }
   }
 }
