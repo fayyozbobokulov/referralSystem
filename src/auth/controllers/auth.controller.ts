@@ -17,7 +17,7 @@ import {
 import { ValidationErrorResponse } from '../../global/interfaces/validation-error-response.interface';
 import { ErrorResponse } from '../../global/interfaces/error-response.interface';
 
-@ApiTags('Auth')
+@ApiTags('Authentication and Authorization')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
