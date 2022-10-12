@@ -6,6 +6,7 @@ import { User } from '../entities/user.entity';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiTags,
@@ -15,6 +16,7 @@ import { ValidationErrorResponse } from '../../global/interfaces/validation-erro
 import { ErrorResponse } from '../../global/interfaces/error-response.interface';
 
 @ApiTags('User')
+@ApiBearerAuth()
 @Controller('user')
 @UseGuards(AuthGuard)
 export class UserController {

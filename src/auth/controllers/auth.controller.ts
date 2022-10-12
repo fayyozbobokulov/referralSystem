@@ -8,6 +8,7 @@ import { User } from '../../user/entities/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -44,6 +45,7 @@ export class AuthController {
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })
   @ApiInternalServerErrorResponse({ type: ErrorResponse })
+  @ApiBearerAuth()
   @Get('current')
   @UseGuards(AuthGuard)
   currentUser(@GetUser() user: User): User {

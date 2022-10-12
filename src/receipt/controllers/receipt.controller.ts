@@ -15,6 +15,7 @@ import { GetUser } from '../../global/decorators/getUser.decorator';
 import { User } from '../../user/entities/user.entity';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -38,6 +39,7 @@ export class ReceiptController {
     return this.receiptService.create(createReceiptDto);
   }
 
+  @ApiBearerAuth()
   @ApiOkResponse({ type: Receipt })
   @ApiBadRequestResponse({ type: ValidationErrorResponse })
   @ApiUnprocessableEntityResponse({ type: ValidationErrorResponse })

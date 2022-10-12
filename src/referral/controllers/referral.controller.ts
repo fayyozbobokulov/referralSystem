@@ -15,6 +15,7 @@ import { GetUser } from '../../global/decorators/getUser.decorator';
 import { User } from '../../user/entities/user.entity';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -28,6 +29,7 @@ import { ErrorResponse } from '../../global/interfaces/error-response.interface'
 
 @ApiTags('Referral')
 @Controller('referral')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class ReferralController {
   constructor(private readonly referralService: ReferralService) {}
